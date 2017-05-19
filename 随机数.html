@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成指定范围内不重复的随机数</title>
+</head>
+<body>
+
+</body>
+<script src="jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+    var count=6;
+    var originalArray=new Array;
+    for (var i=0;i<count;i++){
+        originalArray[i]=i+1;
+    }
+    for (var num,i=0;i<count;i++){
+        do{
+            num=Math.floor(Math.random()*count);
+        }while(originalArray[num]==null);
+        document.write(originalArray[num]+" , ");
+        originalArray[num]=null;
+    }
+
+</script>
+</html>
