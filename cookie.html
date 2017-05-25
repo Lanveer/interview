@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<form action="">
+    用户名：<input type="text" class="number"> <br>
+     密码<input type="password" class="pwd">  <br>
+     <input type="button" value="登录" class="sub">
+</form>
+
+</body >
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+
+     $(function () {
+         var tel = sessionStorage.getItem("tel");
+         var pwd = sessionStorage.getItem("pwd");
+        alert('tel is:'+ tel +','+ 'pwd is:'+pwd);
+
+        $('.number').val(tel);
+        $('.pwd').val(pwd)
+        })
+
+
+        $('.sub').click(function(){
+            var  number=$('.number').val();
+            var mima=$('.pwd').val();
+            sessionStorage.setItem("tel", number);
+            sessionStorage.setItem("pwd", mima);
+
+    })
+
+
+
+
+    </script>
+</html>
