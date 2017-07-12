@@ -1,0 +1,18 @@
+ function JsClass(){
+  this.txt='hello world';
+  this.element = document.createElement('div');
+  this.element.innerHTML='javascript';
+  this.element.addEventListener('click',this.func);
+ 
+ }
+ 
+ jsClass.prototype.render= function(){
+  document.body.appendChild(this.element);
+ }
+ 
+ jsClass.prototype.func= function(){
+ alert(this.txt);
+ }
+ var jc= new JsClass();
+ jc.render();   //   结果会执行添加一个div的操作
+ jc.func();  // 打印出 hello world
