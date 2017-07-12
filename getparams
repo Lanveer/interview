@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getParams</title>
+</head>
+<body>
+
+<h1 class=""></h1>
+
+	
+</body>
+
+<script>
+var url = 'http://www.hidoger.com/index.php?name=fan&pwd=123&id=99';
+
+function getParams(url){
+	var obj={};
+	var a= url.split('?');
+	//  ["http://www.hidoger.com/index.php", "name=fan&pwd=123&id=99"]
+
+	if(a==1)return obj;
+	var b= a[1].split('&');
+	// ["name=fan", "pwd=123", "id=99"]
+ 	for(var i=0; i<b.length;i++){
+ 		// name=fan
+ 		//	pwd=123
+		//	id=99
+
+ 		var c=b[i].split('=');
+ 		 // ["name", "fan"]
+ 		 // ["pwd", "123"]
+ 		 // ["id", "99"]
+
+ 		
+ 		 var a=[c[0]];   // ['name']  ['pwd']  ['id']
+ 		 var bb= c[1];  // fan   123   99
+ 		 //var c= c[0]     //  name pwd id
+ 		 obj[c[0]]= c[1];
+
+ 	}
+ 	 return obj;
+
+		}
+
+window.onload= function(){
+	var data=getParams(url)
+	var name= data.name;
+	var pwd= data.pwd;
+	var id= data.id;
+	 console.log(name)
+	 console.log(pwd)
+	 console.log(id)
+
+}
+
+
+</script>
+
+
+</html>
