@@ -1,0 +1,15 @@
+ 开始angular4 的实战之前，首先需要安装angular的cli也就是客户端类似的东西，之前版本的angular都不需要这样配置的，只是单纯的引入js文件以及一些第三方的库
+ 就可以直接上手开发，下面将列出开发之前的准备工作。
+ 
+ 1. 将node版本以及npm都升级到最新版本
+ 
+ node -v    查看node版本
+ npm -v      查看npm版本
+ 
+ 2.因为angular-cli是用typescript写的，所以要先装这两个：npm install -g typescript typings
+ 
+ 3 如果之前有安装失败的情况的话，就需要清理之前的垃圾文件  npm uninstall -g angular-cli
+      npm cache clean 
+      
+      
+ 4  现在开始安装     npm install -g @angular/cli
