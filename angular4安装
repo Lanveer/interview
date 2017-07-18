@@ -13,3 +13,23 @@
       
       
  4  现在开始安装     npm install -g @angular/cli
+ 
+ 启动服务： ng  server
+ 
+ 
+ 5.在等待了漫长的安装之后，所有的依赖包都安装完成之后，就可以启动服务了，但是在启动的时候或许还会报错，下面展示一个比较常见的错误，
+ 
+ The "@angular/compiler-cli" package was not properly installed
+ 
+eg：这错误就提示了有依赖包还没有被正常的安装，导致在启动服务的时候找不到依赖包而报错。
+
+下面罗列出解决的办法
+
+
+npm cache clean    ----》  将之前安装的cacha都清除掉
+npm i -g cnpm       ----》  重新安装cnpm   相比npm会快速很多
+cnpm i -g @angular/cli  ----》  重新安装0cli
+cnpm install   -----》 找到package.json并重新安装所有的包
+ng serve   ----》 再次启动服务
+
+成功！
