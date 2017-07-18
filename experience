@@ -45,3 +45,22 @@ html:
 ::-webkit-scrollbar {/*隐藏滚轮*/
     display: none;
 }
+
+
+3. 去掉table的边框，在table中添加以下代码 cellpadding="0" cellspacing="0"
+
+eg： <table class="table" cellpadding="0" cellspacing="0">
+
+
+
+
+4. 图片和文字垂直居中的方法
+
+eg:   <td class="hybird2"><img src="../../../public/add_image/small-icon.png" alt=""> 这的名字</td>
+
+css:.hybird2 img{
+    width:14pt;
+    height:14pt;
+    vertical-align: top;
+    margin-right: 3pt;
+}
