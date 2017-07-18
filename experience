@@ -1,0 +1,47 @@
+
+
+
+1. 隐藏浏览器的滚动条
+::-webkit-scrollbar {/*隐藏滚轮*/
+    display: none;
+}
+
+2.css设置横向可以滚动，但是纵向不能滚动
+
+html:
+    <div class="race-footer">
+        <div class="slide-item">第一轮</div>
+        <div class="slide-item">第二轮</div>
+        <div class="slide-item">第三轮</div>
+        <div class="slide-item">第四轮</div>
+        <div class="slide-item">第五轮</div>
+        <div class="slide-item">第五轮</div>
+        <div class="slide-item">第五轮</div>
+    </div>
+    
+ css:   
+ .race-footer{
+    width:100%;
+    height:50pt;
+    background:#0e2a66;
+    position: fixed;
+    bottom:0;
+    display: -webkit-box;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling:touch;
+
+}
+.slide-item{
+    width: 50pt;
+    height: 25pt;
+    margin-top: 12.5pt;
+    margin-right: 5pt;
+    font-size: 10pt;
+    color: #666666;
+    text-align: center;
+    line-height:25pt;
+}
+
+::-webkit-scrollbar {/*隐藏滚轮*/
+    display: none;
+}
