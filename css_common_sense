@@ -1,0 +1,26 @@
+1.采用 UTF-8 编码，在 CSS 代码头部使用：
+  @charset "utf-8";
+  注意，必须要定义在 CSS 文件所有字符的前面（包括编码注释），@charset 才会生效。
+  
+2.命名空间规范
+  布局：以 g 为命名空间，例如：.g-wrap 、.g-header、.g-content。
+  状态：以 s 为命名空间，表示动态的、具有交互性质的状态，例如：.s-current、s-selected。
+  工具：以 u 为命名空间，表示不耦合业务逻辑的、可复用的的工具，例如：u-clearfix、u-ellipsis。
+  组件：以 m 为命名空间，表示可复用、移植的组件模块，例如：m-slider、m-dropMenu。
+  钩子：以 j 为命名空间，表示特定给 JavaScript 调用的类名，例如：j-request、j-open。
+3.样式属性顺序
+
+  如果包含 content 属性，应放在最前面；
+  Positioning Model 布局方式、位置，相关属性包括：position / top / right / bottom / left / z-index / display / float / …
+  Box Model 盒模型，相关属性包括：width / height / padding / margin / border / overflow / …
+  Typographic 文本排版，相关属性包括：font / line-height / text-align / word-wrap / …
+  Visual 视觉外观，相关属性包括：color / background / list-style / transform / animation / transition / …
+  Positioning 处在第一位，因为他可以使一个元素脱离正常文本流，并且覆盖盒模型相关的样式。盒模型紧跟其后，因为他决定了一个组件的大小和位置。其他属性只在组件内部起作用或者不会对前面两种情况的结果产生影响，所以他们排在后面。
+  
+  4. 文件注释
+    
+    文件顶部必须包含文件注释，用 @name 标识文件说明。星号要一列对齐，星号与内容之间必须保留一个空格，标识符冒号与内容之间必须保留一个空格。
+    @description为文件或模块描述。
+    @update为可选项，建议每次改动都更新一下。
+
+    当该业务项目主要由固定的一个或多个人负责时，需要添加@author标识，一方面是尊重劳动成果，另一方面方便在需要时快速定位责任人
