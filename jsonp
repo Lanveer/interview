@@ -1,0 +1,44 @@
+一直以来跨域的问题都存在，可能也总有一些方法可以解决，但是或多或少都存在一定的安全隐患，对于jsonp这种跨域的方法相对来说稍微安全和实用一些，
+
+在现在的项目里面也用上了，以前自己通过接口拿后台数据的时候都是服务端在后台开放链接权限，现在自己尝试自己写服务端的时候，才领会到了这样做存在的缺陷
+ 
+ 
+ 和安全隐患，所以改用了jsonp重新写了一个demo，下面直接是代码：
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跨域测试</title>
+</head>
+<body>
+	
+	<script>
+		//跨域请求数据后执行的回掉函数
+		function test(data) {
+			console.log('the jsonp data is:'+ data.result);
+		}
+
+
+		// 拼接jsonp请求url的地址（返回的结果为一段js代码）
+		var url='http://www.baidu.com?callback=test';
+
+		// 创建一个script标签 并设置sr成熟性
+		 var script= document.createElement('script');
+		 script.setAttribute('src',url);
+		 //将script标签插入到dom结构中，执行js文件并请求数据
+		 document.getElementsByTagName('head')[0].appendChild(script);
+
+	</script>
+</body>
+</html>
+
+
+
+
+注意:这里用callback参数字段将客户端需要执行的回调函数名传给服务端，服务端只需在封装好json数据后，根据该字段值动态创建同名的回调函数即可。
+
+
+
