@@ -1,0 +1,28 @@
+1.使用display:flow-root
+
+ <div class="wrapper"> 
+   <div class="floatElement">浮动元素</div>
+   <div class="floatElement">浮动元素</div>
+ </div>
+
+.floatElement{ float: left; /*或者right*/ }
+.wrapper::after { content:''; display: table; clear: both } 
+@supports(display:flow-root){ 
+.wrapper{ display: flow-root; } 
+.wrapper::after{ content:none; }
+}
+
+
+2 flex  布局
+
+  与BFC的细微区别
+但需要注意的是以下几点细节，Flexbox 布局 和 Block 布局是有细微区别的
+
+Flexbox 不支持 ::first-line 和 ::first-letter 这两种伪元素
+vertical-align 对 Flexbox 中的子元素 是没有效果的
+float 和 clear 属性对 Flexbox 中的子元素是没有效果的，也不会使子元素脱离文档流(但是对Flexbox 是有效果的！)
+多栏布局（column-*） 在 Flexbox 中也是失效的，就是说我们不能使用多栏布局在Flexbox 排列其下的子元素（鱼和熊掌不可得兼嘛）
+Flexbox 下的子元素不会继承父级容器的宽
+
+
+
