@@ -1,0 +1,85 @@
+1.this
+
+定义：his是在执行上下文创建时确定的一个在执行过程中不可更改的变量。
+所谓执行上下文，就是JavaScript引擎在执行一段代码之前将代码内部会用到的一些变量、
+函数、this提前声明然后保存在变量对象中的过程。这个'代码片段'包括：全局代码(script标签内部的代码)、
+函数内部代码、eval内部代码。而我们所熟知的作用域链也会在保存在这里，以一个类数组的形式存储在对应函数的[[Scopes]]属性中。
+
+this只在函数调用阶段确定，也就是执行上下文创建的阶段进行赋值，
+保存在变量对象中。这个特性也导致了this的多变性:🙂即当函数在不同的调用方式下都可能会导致this的值不同
+
+
+var a = 1;
+function fun() {
+   'use strict';
+    var a = 2;
+      return this.a;
+}
+fun();//😨报错 Cannot read property 'a' of undefined
+
+
+var a = 1;
+function fun() {
+    var a = 2;
+      return this.a;
+}
+fun();//1
+
+上面同一段代码，在不同模式下之所以有不同表现，就是因为this在严格模式，非严格模式下的不同。
+
+结论：当函数独立调用的时候，在严格模式下它的this指向undefined，在非严格模式下，当this指向undefined的时候，自动指向全局对象(浏览器中就是window)
+在全局环境下 this就是指向自己
+
+this.a = 1;
+var b = 1;
+c = 1;
+console.log(this === window)//true
+//这三种都能得到想要的结果，全局上下文的变量对象中存在这三个变量
+
+
+
+var a = 1000;
+var obj = {
+    a: 1,
+      b: this.a + 1
+}
+function fun() {
+    var obj = {
+          a: 1,
+        c: this.a + 2 //严格模式下这块报错 Cannot read property 'a' of undefined
+    }
+    return obj.c;
+}
+console.log(fun());//1002
+console.log(obj.b);//1001
+
+
+结论：当obj在全局声明的时候，obj内部属性中的this指向全局对象，当obj在一个函数中声明的时候，严格模式下this会指向undefined，
+非严格模式自动转为指向全局对象
+
+
+作为对象的方法
+
+var a = 1;
+var obj = {
+  a: 2,
+  b: function() {
+    return this.a;
+  }
+}
+console.log(obj.b())//2
+👆b所引用的匿名函数作为obj的一个方法调用，这时候this指向调用它的对象。这里也就是obj。那么如果b方法不作为对象方法调用呢？啥意思呢，就是这样👇：
+
+var a = 1;
+var obj = {
+  a: 2,
+  b: function() {
+    return this.a;
+  }
+}
+var t = obj.b;
+console.log(t());//1
+
+
+
+
