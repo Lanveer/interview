@@ -1,0 +1,52 @@
+最近为了面试，准备了一些h5 的知识，对于本地缓存这一块，之前倒是有一些接触，但是仅仅局限于使用，对于其深入的用法并没有仔细的研究过
+
+借着这个机会，整理了一些本地储存的知识点。
+
+ 1.localstorage： 没有时间限制的数据存储，关闭了浏览器之后，储存的数据依然存在，语法也简单。
+ 
+  存数据： localStorage.name='lanveer';
+  取数据：localStorage.name    //lanveer
+  
+  做一个本地的浏览次数增加功能，前期可以本地储存在浏览器里面，定期存到数据库里面，
+  
+  eg：  if(localStorage.page){
+      localStorage.page=Number(localStorage.page)+1
+  }else{
+  localStorage.page=1
+  }
+  
+   document.write(localStorage.page)
+   这里的localStorage.page就会随着浏览器的刷新次数的增加而增加，简单的改装之后可以用来做一个次数增加.
+   
+   
+   其他的操作：
+   
+      localStorage.a = 3;//设置a为"3"
+      localStorage["a"] = "sfsf";//设置a为"sfsf"，覆盖上面的值
+      localStorage.setItem("b","isaac");//设置b为"isaac"
+      var a1 = localStorage["a"];//获取a的值
+      var a2 = localStorage.a;//获取a的值
+      var b = localStorage.getItem("b");//获取b的值
+      localStorage.removeItem("c");//清除c的值
+      
+      这里最推荐使用的自然是getItem()和setItem()，清除键值对使用removeItem()，
+      sessionStorage.clear(); 	localStorage.clear()表示清除所有的缓存文件
+   
+   
+  2. sessionStorage: 有时间限制的数据储存，关闭浏览器之后，储存的数据就会被删除，其存储和localStorage基本一致。只是性质不太一样，
+  所以使用的场所也就不一样了。
+  
+  存数据:  sessionStorage.name='lanveer',
+  取数据： sessionStorage.name    // lanveer
+  
+  sessionStorage同样可以制作本地数据浏览次数的增加，但是浏览器关闭的时候存储的数据就会被删除，所以使用的场景就会少很多。
+  
+  eg：  if(sessionStorage.page){
+      localStorage.page=Number(sessionStorage.page)+1
+  }else{
+  sessionStorage.page=1
+  }
+  
+   console.log(sessionStorage.page);
+   
+   
