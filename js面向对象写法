@@ -110,6 +110,133 @@ person.show();   //  窗口便会打印出lanveer
    a.show()  // abc
    b.show()  //abd 
   
+  
+  
+  
+  阮一峰日志加深巩固：
+  
+  1.生成实例对象的原始模式
+   var cat={
+   name:'',
+   color:''
+   }
+   现在需要根据这个原型对象的规格生成两个实例对象
+   var cat1= {} // 创建一个空对象
+   cat1.name='damao';
+   cat1.color= 'yellow';
+   var cat2={};
+   cat2.name='ermao';
+   cat2.color='red'
+    以上就是这就是最简单的封装了，把两个属性封装在一个对象里面。但是，这样的写法有两个缺点，
+    一是如果多生成几个实例，写起来就非常麻烦；二是实例与原型之间，没有任何办法，可以看出有什么联系 
+   
+   
+   2. 原始模式的改进  
+   用一个函数结局代码重复的问题
+   function Cat(name,color){
+        return {
+          name:name,
+          color:color
+          }
+   }
+   
+   然后再生成实例对象调用函数
+   
+   var cat1= Cat('damao','yellow');
+   var cat2= Cat('ermao','red')
+   
+   这种方法的缺点就是  cat1 和cat2 之间没有内在的联系，不能够反映它们是同一个原型对象的实例
+   
+   
+   3  构造函数模式  ----》 为了结局从原型对象上生成实例的问题，js提供了构造函数constructor 模式
+   
+    function Cat(name.color){
+        this.name=name;
+        this.color= color;
+    }
+   开始生成实例对象
+     var cat1= new Cat('damao','yellow');
+     var cart2= new Cat('ermao','red');
+     alert(cat1.name)  // damao
+     alert(cat1.color)  // yellow
+  此时此刻，cat1和cat2 会自动包含一个constructor属性，指向他们的构造函数
+  
+   alert(cat1.constructor == Cat)  // true
+   alert(cart2.constructor== Cat)  // true
+   
+   js提供的instanceof运算符，同样可以验证原型对象与实例对象之间的关系
+   
+   alert(cat1 instanceof Cat) // true
+   alert(cat2 instanceof Cat)  // true
+   
+   4.构造函数模式问题 ---》 构造函数的方法是很好用，但是存在一个浪费内存的问题
+   
+   如果我们给cat对象添加一个不变的属性type和一个eat方法的时候原型对象就是如下所展示
+   
+    functuion Cat(name,color){
+        this.name=name;
+        this.color= color;
+        this.type='cat animal';
+        this.eat= fucntion(){
+        alert('eat mices')
+        }
+    }
+    
+    采用同样的方法生成实例 
+     var cat1= new Cat('damao','yellow');
+     var cat2= new Cat('ermao','red');
+     alert(cat1.type)   // cat animal
+     alert(cat1.eat())   // eat mices
+     
+     弊端： 表面上看上去没有什么，但是对于每一个实例对象，type和eat() 方法都是一模一样的内容，每一次生成一个实例都需要
+     重复一些重复的操作，浪费内存，影响代码的执行效率。
+     alert(cat1.eat== cat2.eat)   //false    原因在于两个实例对象最终所指向的原型对象不一致
+     
+     5.prototype模式 --》每一个构造函数都有一个prototy属性指向另一个对象，这个对象所有的属性和方法，都会被构造函数的实例继承
+     这就意味着，我们可以将一些不变的属性和方法直接定义在prototype上，既不浪费内存，又增加了代码的执行小效率
+     
+       function Cat(name,color){
+        this.name=name;
+        this.color=color;
+       }       
+       Cat.prototype.type= 'cat animal';
+       cat.prototype.eat=function(){alert('eat mices')};
+       
+       然后生成实例
+        var cat1= new Cat('damao','yellow');
+        var cat2= new Cat('ermao','red');
+        alert(cat1.type)   // cat animal
+        cat1.eat()         // eat mices
+        
+        
+        此时此刻，所有实例的type和eat方法都指向了同一个内存地址 ，指向了prototype对象，因此提高了运行效率
+        
+         alert(cat1.eat== cat2.eat)   //true
+         
+         
+       6  prototype模式的验证方式
+         判断某一个prototype对象和某个实例之间的关系
+          alert(Cat.prototype.isPrototypeOf(cat1));  //true
+          alert(Cat.prototype.isPrototypeOf(cat2))   // true
+          判断某一个属性是本地属性还是继承属性
+          alert(cat1.hasOwnProperty('name'));   //true
+          alert(car1.hasOwnProperty('type'))     // false
+          判断实例是否含有某一个属性  ---->不管是本地属性还是继承属性，只有要这个属性就能判断出来。
+           alert('name' in cat1)   //true
+           alert('type' in cat1)   // true  
+        
+        
+        
+        
+        
+   
+   
+   
+   
+    
+   
+  
+  
    
    
 
