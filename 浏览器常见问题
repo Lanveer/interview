@@ -1,0 +1,50 @@
+1. 去除浏览器默认填充密码框以及默认样式
+  1  通常我们会在form表单上加入autocomplete="off" 或者 在输入框中加入autocomplete="off"
+  <form method="post" action="" name="login" autocomplete="off"> 
+  </form> 
+  //或者 
+  <input id="name" type="text" name="name" maxlength="20" autocomplete="off">
+2.但是有一种情况例外，就是表单中有input[type="password"]，点击保存密码后，在Chrome浏览器则自动填充了用户名和密码的输入框；
+  为了统一样式，我们需要就对Chrome的问题经行单独处理。  
+  
+  a.修改disabled属性
+  if(navigator.userAgent.toLowerCase().indexOf("chrome") != -1){ 
+   var inputers = document.getElementsByTagName("input"); 
+   for(var i=0;i<inputers.length;i++){ 
+    if((inputers[i].type !== "submit") && (inputers[i].type !== "password")){ 
+     inputers[i].disabled= true; 
+    } 
+   } 
+   setTimeout(function(){ 
+    for(var i=0;i<inputers.length;i++){ 
+     if(inputers[i].type !== "submit"){ 
+      inputers[i].disabled= false; 
+     } 
+    } 
+   },100) 
+  }
+  
+  b.去除输入框的name和id属性
+  if(navigator.userAgent.toLowerCase().indexOf("chrome") != -1){ 
+   var inputers = document.getElementsByTagName("input"); 
+   for(var i=0;i<inputers.length;i++){ 
+    if((inputers[i].type !== "submit") && (inputers[i].type !== "password")){ 
+     var input = inputers[i]; 
+     var inputName = inputers[i].name; 
+     var inputid = inputers[i].id; 
+     inputers[i].removeAttribute("name"); 
+     inputers[i].removeAttribute("id"); 
+     setTimeout(function(){ 
+      input.setAttribute("name",inputName); 
+      input.setAttribute("id",inputid); 
+     },1) 
+    } 
+   } 
+  }
+  
+  
+  c.3.可以在不需要默认填写的input框中设置 autocomplete="new-password"
+  
+  d.修改readonly属性
+  <input type="password" readonly onfocus="this.removeAttribute('readonly');"/>
+  
