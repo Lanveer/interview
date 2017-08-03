@@ -1,0 +1,122 @@
+面试中遇到的问题，考察了js的面向对象的基本功，下面例子就总结了几种基本的js面向对象的写法
+
+1 工厂模式
+
+var Circle= function(){
+    var obj=new Object();
+    obj.PI=3.14159;
+    obj.area= function(r){
+        return this.PI*r*r;
+    };
+    return obj;
+};
+var c=new Circle();
+alert(c.area(1.0))
+
+（2).   function createPerson(name){
+      var obj= new Object();
+      obj.name= name;
+      obj.show= function(){
+      alert(this.name)
+      };
+      return obj;
+}
+
+var person = createPerson('lanveer');
+person.show();   //  窗口便会打印出lanveer
+
+
+2.比较正规的写法
+
+ function Circle(r){
+     this.r=r;
+ }
+ Circle.PI=3.14159;
+ Circle.prototype.area= function(){
+     return Circle.PI* this.r*this.r;
+ }
+ var c=new Circle(1.0);
+   alertr(c.area())
+   
+   
+3.   json写法
+
+ var Circle = {
+        'PI': 3.14159,
+        'area': function(r) {
+            return this.PI * r * r;
+        }
+    };
+    alert(Circle.area(1.0))
+    
+    
+    
+4.    第一种写法的扩展
+  var Circle = function(r) {
+        this.r = r;
+    }
+
+    Circle.PI = 3.14159;
+    Circle.prototype = {
+        area: function() {
+            return this.r * this.r * Circle.PI;
+        }
+    }
+
+    var obj = new Circle(1.0);
+    alert(obj.ares())
+
+
+
+5. 构造函数模式
+
+
+   functon Person (name,sex){
+   this.name= name ;
+   var sex= sex;//私有方法不会被调用
+   this.show= function(){
+   alert(sex)
+   }
+   }
+   
+   var person1=new Person('lanveer','man');
+   alert(person1.name)  // lanveer
+   alert(person1.sex)    // undefined    由于调用的是私有方法，需要特有的函数才能调用。
+    person1.show()      //  man
+    
+    
+  6.组合使用原型模式和构造函数模式
+  
+   function Person= function(name,sex){
+   this.name= name;
+   this.sex= sex;
+   this.ove= ['a','b']
+   }
+   Person.prototype={
+   constructor:Person,
+   show: function(){
+   alert(this.love)        // 这里可以打印出    this.name  this.sex 等等属性
+   };
+   
+
+   
+   }
+  
+    var a= new Person('lanveer','man');
+   var b= new　Person('Karl','man')
+   a.love.push('c');
+   b.love.push('d')
+   
+   a.show()  // abc
+   b.show()  //abd 
+  
+   
+   
+
+
+
+
+
+
+
+
