@@ -1,0 +1,97 @@
+1：emp表中查询公司总共有几个部门
+注意，会查询出来大量重复的，使用函数distinct
+select distinct job from emp;
+
+2：查询公司工资在1000-3000之间的人有哪些
+使用函数between ...and..
+select * from scott.emp where sal between 3000 and 5000;
+
+3：查询公司没有奖金的人
+使用null 和“” 不一样
+select * from scott.emp where comm is null;
+
+4：查询公司员工职位是'manager','clerk' 的人
+select * from scott.emp where lower(job) in('manager','clerk');
+查询不是这两个职位的人
+select * from scott.emp where upper(job) not in('MANAGER','CLERK');
+
+5：查询工资最高的人
+ 查询每个部门工资最高的人？--分组查询
+select  deptno,max(sal) from scott.emp group by deptno ;
+6：查询每个部门工资最高的员工信息
+select * from scott.emp where sal in(select max(sal) from scott.emp group by deptno)
+
+7：-查询比20部门总人数多的部门
+select deptno from scott.emp group by deptno having count(*) >(select count(*) from scott.emp where deptno=20); 
+
+8：--计算员工入职多少天?
+select  empno,ename,trunc(sysdate-hiredate) from scott.emp;
+9：计算员工入职多少个月？
+select empno,ename,trunc(months_between(sysdate,hiredate)) from scott.emp;
+
+
+;
+
+;
+
+13：薪水由高到低排序( 降序排列 )
+select empno,ename,sal from scott.emp order by sal desc;
+14-按入职时间排序 , 入职时间越早排在前面
+select hiredate from scott.emp order by hiredate;
+15按部门排序 , 同一部门按薪水由高到低排序 
+select deptno,sal from scott.emp order by deptno,sal desc;
+16计算员工的薪水总和是多少？sum()
+select sum(sal)+sum(comm) from scott.emp;
+17计算最早和最晚的员工入职时间
+select min(hiredate),max(hiredate) from scott.emp;
+
+18按部门计算每个部门的最高和最低薪水分别是多少
+select deptno,max(sal),min(sal) from scott.emp group by deptno order by deptno;
+
+19计算每个部门的 薪水总和 和 平均薪水？
+select deptno,sum(sal),avg(sal) from scott.emp group by deptno;
+
+20按职位分组 , 每个职位的最高、最低薪水和人数？
+select job,max(sal),min(sal),count(*) from scott.emp group by job;
+
+21平均薪水大于5000元的部门数据 , 没有部门的不算在内
+select deptno,avg(sal) from scott.emp group by deptno having avg(sal)>2000;
+22薪水总和大于20000元的部门数据
+select deptno,sum(sal) from scott.emp group by deptno having sum(sal)>10000;
+23：哪些职位的人数超过2个人
+select job,count(*) from scott.emp group by job having count(*)>2;
+
+24：查询最高薪水的是谁？-查询最低薪水的员工
+select ename from scott.emp where sal=(select max(sal) from scott.emp);
+
+25：谁的工资比smith高
+select ename from scott.emp where sal>(select sal from scott.emp where lower(ename)='smith');
+
+26销售部门有哪些职位存在
+select job from scott.emp where deptno=(select deptno from scott.dept where lower(dname)='sales');
+
+
+--思考:
+--	谁的工资比smith高这道题目中如果存在两个角simth的人会怎么样?
+    --all:满足全部
+    --any:任意一个
+    insert into scott.emp(empno,ename,sal) values(9527,'smith',888);
+   
+   select ename from scott.emp where sal>all(select sal from scott.emp where lower(ename)='smith');
+
+27-查询谁和smith是同一个部门的员工
+select empno,ename,deptno from scott.emp where deptno=(select deptno from scott.emp where lower(ename)='smith');
+
+28查询谁是员JAMES的下属
+select empno,ename from scott.emp where mgr in(select mgr from scott.emp where lower(ename)='james');
+
+29：-每个部门的最高薪水是多少
+select * from scott.emp where (deptno,sal) in (select deptno,max(sal) from scott.emp group by deptno);
+30哪个部门的人数比部门20的人数多
+select deptno,count(*) from scott.emp group by deptno having count(*)>
+(select count(*) from scott.emp where deptno=20);
+
+31：哪些员工的薪水比公司的平均薪水低？
+select empno,ename from scott.emp where sal<(select avg(sal) from scott.emp);
+
+？
