@@ -1,0 +1,138 @@
+列出arttemplat在nodejs下面的应用
+
+
+ 1. 安装node环境
+ 2. 安装模板 npm install art-template --save
+ 3.创建http服务器
+      var http = require(“http”);
+  var os = require(“os”);
+  http.createServer(function(request, response) {
+      console.log(“New request arrived.”);
+      response.end();
+  }).listen(3000);
+  console.log(“Server is running, listening on port 3000….”);
+  4.编写artTemplate模板
+    <html>
+    <head>
+    <meta charset=”utf-8″>
+    <title>模板</title>
+    </head>
+
+    <body>
+         <div id=”main”>
+              <ul>
+                   {{each list}}
+                   <li>编号：{{$value.id}} &nbsp;&nbsp;姓名：{{$value.name}}</a></li>
+                   {{/each}}
+              </ul>
+         </div>
+    </body>
+    </html>
+    5.渲染模板
+    var http = require(“http”);
+    var os = require(“os”);
+    http.createServer(function(request, response) {
+    console.log(“New request arrived.”);var template = require(‘art-template’);
+         //数据
+         var data = {list: [{id:’1′, name:’张三’}, {id:’2′, name:’李四’}]};
+         //渲染模板
+         var html = template(‘./index’, data);
+
+    response.writeHead(200, {“Content-Type”: “text/html”});
+    response.write(html);
+    response.end();
+    }).listen(3000);
+    console.log(“Server is running, listening on port 3000….”);
+    
+    二、搭配express替换jade模板引擎
+    
+    1.安装express
+    
+    2.改造app.js
+    
+    //app.js
+ 
+var express = require(‘express’);
+var path = require(‘path’);
+var favicon = require(‘serve-favicon’);
+var logger = require(‘morgan’);
+var cookieParser = require(‘cookie-parser’);
+var bodyParser = require(‘body-parser’);//——————————————start
+//引用artTemplate模块
+var template = require(‘art-template’);
+//——————————————end
+
+var routes = require(‘./routes/index’);
+var users = require(‘./routes/users’);var app = express();
+// view engine setup
+app.set(‘views’, path.join(__dirname, ‘views’));
+//——————————————start
+//用art-template引擎替换默认的jade引擎
+//app.set(‘view engine’, ‘jade’);
+template.config(‘base’, ”);
+template.config(‘extname’, ‘.html’);
+app.engine(‘.html’, template.__express);
+app.set(‘view engine’, ‘html’);
+//——————————————end
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, ‘public’, ‘favicon.ico’)));
+app.use(logger(‘dev’));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+3.编写模板
+
+<html>
+<head>
+<meta charset=”utf-8″>
+<title>模板</title>
+</head>
+ 
+<body>
+     <div id=”main”>
+          <ul>
+               {{each list}}
+               <li>编号：{{$value.id}} &nbsp;&nbsp;姓名：{{$value.name}}</a></li>
+               {{/each}}
+          </ul>
+     </div>
+</body>
+</html>
+
+
+
+4.渲染模板
+
+var express = require(‘express’);
+var router = express.Router();
+ 
+router.get(‘/’, function(req, res, next) {
+ 
+     //数据
+     var data = {
+     title: ‘国内要闻’,
+     time: (new Date).toString(),
+     list: [
+          {
+               id: ‘1’,
+               name: ‘张三’
+          },
+          {
+               id: ‘2’,
+               name: ‘李四’
+          }
+     ]
+     };
+ 
+     //渲染模板
+     res.render(‘index’, data);
+ 
+});
+ 
+module.exports = router;
+
+    
+      
+    
