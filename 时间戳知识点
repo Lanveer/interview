@@ -1,0 +1,3 @@
+var now = parseInt(Date.parse(new Date())/1000);
+
+可以获取当前时间的时间戳
