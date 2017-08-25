@@ -1,0 +1,27 @@
+1.把一个字面量对象，变成某个类的实例
+function Type() {}
+var a = {};
+答案：a.__proto__ = new Type;
+// a instanceof Type === true
+
+2.请填入内容，使得数组从小到大排序；
+var arr = [6,2,10,5,9,5];
+arr.sort(              )
+     
+分析：
+考对sort这个函数。MDN上解释灰常清晰，附上：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+
+function(a,b){return a-b}
+
+3.把两个字符串相加并且最终的结果字符顺序反转。
+var str1 = 'abcd';
+var str2 = 'jjhhgg';
+var str3 = str1.___________(str2);
+var str4 = str3.___________('').reverse().concat(''); 
+分析：
+这题目有问题，最后一句cancat('')是个什么鬼，题目意思？
+
+var str1 = 'abcd';
+var str2 = 'jjhhgg';
+var str3 = str1.concat(str2);
+var str4 = str3.split('').reverse().join('');
